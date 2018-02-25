@@ -23,7 +23,7 @@ RUN gerbera-${VERSION}/scripts/install-taglib111.sh
 #RUN gerbera-${VERSION}/scripts/install-duktape.sh
 # For some reason gerbera can't find the library when installed with script
 ENV DUKTAPE_VERSION=2.1.0
-RUN wget http://duktape.org/duktape-${DUKTAPE_VERSION}.tar.xz && tar -xJvf duktape-${DUKTAPE_VERSION}.tar.xz
+RUN wget https://github.com/svaarala/duktape/releases/download/v${DUKTAPE_VERSION}/duktape-${DUKTAPE_VERSION}.tar.xz && tar -xJvf duktape-${DUKTAPE_VERSION}.tar.xz
 
 RUN cd duktape-${DUKTAPE_VERSION} && make -f Makefile.sharedlibrary && sudo make -f Makefile.sharedlibrary install && sudo ldconfig
 
