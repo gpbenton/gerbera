@@ -1,0 +1,13 @@
+
+version: '2.0'
+
+services:
+    app:
+        build: .
+        restart: always
+        volumes:
+            - "~/Pictures:/media/pictures"
+            - "~/Videos:/media/videos"
+            - "~/Music:/media/music"
+            - "./config:/home/gerbera/.config/gerbera"
+        network_mode: "host"
