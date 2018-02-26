@@ -11,3 +11,4 @@ services:
             - "~/Music:/media/music:ro"
             - "./config:/home/gerbera/.config/gerbera"
         network_mode: "host"
+        restart: always
