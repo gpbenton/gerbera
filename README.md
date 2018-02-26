@@ -18,4 +18,4 @@ Docker installation of [gerbera](https://github.com/gerbera/gerbera), a upnp med
   level="full" recursive="yes" hidden-files="no"/>
     </autoscan>
 
-- docker up
+- docker-compose up -d
