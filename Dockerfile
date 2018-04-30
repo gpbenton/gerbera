@@ -1,12 +1,12 @@
-FROM ubuntu
+FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y uuid-dev libexpat1-dev libsqlite3-dev libmysqlclient-dev \
+RUN apt-get update && apt-get upgrade -y && apt-get install -y uuid-dev libexpat1-dev libsqlite3-dev libmysqlclient-dev \
 libmagic-dev libexif-dev libcurl4-openssl-dev \
 libavutil-dev libavcodec-dev libavformat-dev libavdevice-dev \
 libavfilter-dev libavresample-dev libswscale-dev libswresample-dev libpostproc-dev \
 cmake git g++ wget autoconf build-essential libtool libffmpegthumbnailer-dev
 
-ENV VERSION=1.1.0
+ENV VERSION=1.2.0
 
 WORKDIR /tmp
 
@@ -20,13 +20,7 @@ RUN wget https://github.com/gerbera/gerbera/archive/v${VERSION}.tar.gz && tar -x
 
 RUN gerbera-${VERSION}/scripts/install-pupnp18.sh
 RUN gerbera-${VERSION}/scripts/install-taglib111.sh
-#RUN gerbera-${VERSION}/scripts/install-duktape.sh
-# For some reason gerbera can't find the library when installed with script
-ENV DUKTAPE_VERSION=2.1.0
-RUN wget http://duktape.org/duktape-${DUKTAPE_VERSION}.tar.xz && tar -xJvf duktape-${DUKTAPE_VERSION}.tar.xz
-
-RUN cd duktape-${DUKTAPE_VERSION} && make -f Makefile.sharedlibrary && sudo make -f Makefile.sharedlibrary install && sudo ldconfig
-
+RUN gerbera-${VERSION}/scripts/install-duktape.sh
 
 RUN mkdir build && cd build && cmake ../gerbera-${VERSION} -DWITH_MAGIC=1 -DWITH_CURL=1 -DWITH_JS=1 \
 -DWITH_TAGLIB=1 -DWITH_AVCODEC=1 -DWITH_FFMPEGTHUMBNAILER=1 -DWITH_EXIF=1 -DWITH_SYSTEMD=0 && make -j4 && sudo make install
