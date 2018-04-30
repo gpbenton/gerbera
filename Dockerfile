@@ -18,7 +18,7 @@ USER gerbera
 
 RUN wget https://github.com/gerbera/gerbera/archive/v${VERSION}.tar.gz && tar -xzvf v${VERSION}.tar.gz
 
-RUN gerbera-${VERSION}/scripts/install-pupnp18.sh
+RUN CFLAGS='-D_LARGE_FILE_SOURCE -D_FILE_OFFSET_BITS=64' gerbera-${VERSION}/scripts/install-pupnp18.sh
 RUN gerbera-${VERSION}/scripts/install-taglib111.sh
 RUN gerbera-${VERSION}/scripts/install-duktape.sh
 
