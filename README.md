@@ -2,9 +2,11 @@
 Docker installation of [gerbera](https://github.com/gerbera/gerbera), a upnp media server
 
 # Usage
- - git clone https://github.com/gpbenton/gerbera.git
- - cd gerbera
-- docker-compose build
+Either | Or
+-------|---
+git clone https://github.com/gpbenton/gerbera.git | docker pull gpbenton/gerbera
+cd gerbera                                        | mkdir gerbera
+docker-compose build                              | cd gerbera
 
 - mkdir config
 - chmod 777 config
