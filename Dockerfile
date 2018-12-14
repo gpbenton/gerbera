@@ -6,7 +6,8 @@ libavutil-dev libavcodec-dev libavformat-dev libavdevice-dev \
 libavfilter-dev libavresample-dev libswscale-dev libswresample-dev libpostproc-dev \
 cmake git g++ wget autoconf build-essential libtool libffmpegthumbnailer-dev
 
-ENV VERSION=1.2.0
+ARG VERSION
+ENV VERSION ${VERSION:-1.2.0}
 
 WORKDIR /tmp
 
