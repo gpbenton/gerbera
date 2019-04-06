@@ -21,4 +21,8 @@ docker-compose build                              | cd gerbera
   level="full" recursive="yes" hidden-files="no"/>
     </autoscan>
 ```
+Remove the top text before the config section and then add this line to the top
+```
+<?xml version="1.0" encoding="UTF-8"?>
+```
 - docker-compose up -d
