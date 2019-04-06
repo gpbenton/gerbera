@@ -7,7 +7,7 @@ libavfilter-dev libavresample-dev libswscale-dev libswresample-dev libpostproc-d
 cmake git g++ wget autoconf build-essential libtool libffmpegthumbnailer-dev
 
 ARG VERSION
-ENV VERSION ${VERSION:-1.3.0}
+ENV VERSION ${VERSION:-1.3.1}
 
 WORKDIR /tmp
 
