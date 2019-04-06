@@ -38,4 +38,6 @@ RUN mkdir -p /home/gerbera/.config/gerbera
 
 VOLUME [ "/media/pictures", "/media/videos", "/media/music", "/home/gerbera/.config/gerbera" ]
 
+LABEL GERBERA-VERSION=${VERSION}
+
 ENTRYPOINT [ "/usr/local/bin/gerbera" ]
