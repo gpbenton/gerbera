@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM arm32v7/ubuntu:latest
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y uuid-dev libexpat1-dev libsqlite3-dev libmysqlclient-dev \
 libmagic-dev libexif-dev libcurl4-openssl-dev \
