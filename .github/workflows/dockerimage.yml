@@ -11,4 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: VERSION=1.3.5 docker build . --file Dockerfile --tag gerbera:$VERSION
+      run:  docker build . --file Dockerfile --tag gerbera:1.3.5
+      env:
+        VERSION: 1.3.5
+            
