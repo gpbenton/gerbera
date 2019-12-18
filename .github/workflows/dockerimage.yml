@@ -13,12 +13,12 @@ jobs:
     - name: Build the Docker image
       run:  docker build . --build-arg=VERSION="1.3.5" --file Dockerfile --tag gerbera:1.3.5
             
-    - name: Build & Push to GitHub Package
-      uses: opspresso/action-docker@master
-      env:
-          USERNAME: gpbenton
-          PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-          REGISTRY: "docker.pkg.github.com"
-          # IMAGE_NAME: "user_id/image_name"
-          TAG_NAME: "v1.3.5"
-          LATEST: "true"
+    - name: Dockerize
+      if: success()
+      uses: manusa/actions-publish-docker@master
+      with:
+        name: gerbera
+        tag: 1.3.5
+        username: gpbenton
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: docker.pkg.github.com
