@@ -13,7 +13,7 @@ jobs:
     - name: Build the Docker image
       run:  docker build . --build-arg=VERSION="1.3.5" --file Dockerfile --tag docker.pkg.github.com/gpbenton/gerbera:1.3.5
     - name: login to docker
-      run:  docker login docker.pkg.github.com -u gpbenton -p ${ secrets.GITHUB_TOKEN }
+      run:  docker login docker.pkg.github.com -u gpbenton -p ${{ secrets.GITHUB_TOKEN }}
     - name: push to github
       run:  docker push docker.pkg.github.com/gpbenton/gerbera:1.3.5
     - name: logout from docker
