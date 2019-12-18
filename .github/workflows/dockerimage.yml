@@ -17,7 +17,7 @@ jobs:
       uses: opspresso/action-docker@master
       env:
           USERNAME: gpbenton
-          PASSWORD: ${{ secrets.GITHUB_PERSONAL_TOKEN }}
+          PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           REGISTRY: "docker.pkg.github.com"
           # IMAGE_NAME: "user_id/image_name"
           TAG_NAME: "v1.3.5"
