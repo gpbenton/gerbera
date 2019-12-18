@@ -1,6 +1,8 @@
 name: Docker Image CI
 
 on: [push]
+env:
+  VERSION: 1.3.5
 
 jobs:
 
@@ -10,12 +12,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Build the Docker image
-      run:  docker build . --build-arg=VERSION="1.3.5" --file Dockerfile --tag docker.pkg.github.com/gpbenton/gerbera:1.3.5
-    - name: login to docker
-      run:  docker login docker.pkg.github.com -u gpbenton -p ${{ secrets.GITHUB_TOKEN }}
-    - name: push to github
-      run:  docker push docker.pkg.github.com/gpbenton/gerbera:1.3.5
-    - name: logout from docker
-      run:  docker logout docker.pkg.github.com
-            
+    - name: Build and push the Docker image
+      run:  |
+        docker build . --build-arg=VERSION=$VERSION --file Dockerfile --tag docker.pkg.github.com/gpbenton/gerbera/gerbera:$VERSION
+        docker login docker.pkg.github.com -u gpbenton -p ${{ secrets.GITHUB_TOKEN }}
+        docker push docker.pkg.github.com/gpbenton/gerbera/gerbera:$VERSION
+        docker tag docker.pkg.github.com/gpbenton/gerbera/gerbera:$VERSION docker.pkg.github.com/gpbenton/gerbera/gerbera:latest
+        docker push docker.pkg.github.com/gpbenton/gerbera/gerbera:latest
+        docker logout docker.pkg.github.com
