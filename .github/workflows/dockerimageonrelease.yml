@@ -2,7 +2,7 @@ name: Check for New Release
 
 on:
   schedule:
-    - cron:  '*/5 22 * * *'
+    - cron:  '*/15 22 * * *'
 
 jobs:
 
