@@ -1,0 +1,33 @@
+name: Docker Image CI
+
+on:
+  schedule:
+    - cron:  '27 17 * * *'
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check if latest release in my docker hub repository
+      run: |
+        VERSION=$(curl -sL https://api.github.com/repos/gerbera/gerbera/releases/latest | jq -r ".tag_name")
+        wget -q https://registry.hub.docker.com/v1/repositories/gpbenton/gerbera/tags -O - | grep $VERSION
+
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      if: failure()
+      run: |
+        VERSION=$(curl -sL https://api.github.com/repos/gerbera/gerbera/releases/latest | jq -r ".tag_name")
+        docker build . --build-arg=VERSION=$VERSION --file Dockerfile --tag gpbenton/gerbera:$VERSION
+        docker login -u gpbenton -p ${{ secrets.HUB_TOKEN }}
+        docker push gpbenton/gerbera:$VERSION
+        docker tag gpbenton/gerbera:$VERSION gpbenton/gerbera:latest
+        docker push gpbenton/gerbera:latest
+        docker logout
+      
+      run: |
+        
+        docker build . --file Dockerfile --tag my-image-name:$(date +%s)
