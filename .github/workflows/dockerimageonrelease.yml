@@ -2,7 +2,7 @@ name: Check for New Release
 
 on:
   schedule:
-    - cron:  '*/10 20 * * *'
+    - cron:  '*/10 21 * * *'
 
 jobs:
 
@@ -14,10 +14,9 @@ jobs:
     - name: Check if latest release in my docker hub repository
       run: |
         VERSION=$(curl -sL https://api.github.com/repos/gerbera/gerbera/releases/latest | jq -r ".tag_name")
-        wget -q https://registry.hub.docker.com/v1/repositories/gpbenton/gerbera/tags -O - | grep $VERSION
+        wget -q https://registry.hub.docker.com/v1/repositories/gpbenton/gerbera/tags -O - | grep --invert-match --silent $VERSION
 
     - uses: actions/checkout@v1
-      if: failure()
     - name: Build the Docker image
       run: |
         VERSION=$(curl -sL https://api.github.com/repos/gerbera/gerbera/releases/latest | jq -r ".tag_name")
