@@ -3,7 +3,7 @@ name: Docker Image CI
 on: 
   push:
     paths:
-      - **Dockerfile
+      - '**Dockerfile'
 
 env:
   VERSION: 1.3.5
