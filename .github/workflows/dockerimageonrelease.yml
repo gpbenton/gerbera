@@ -17,8 +17,9 @@ jobs:
         wget -q https://registry.hub.docker.com/v1/repositories/gpbenton/gerbera/tags -O - | grep $VERSION
 
     - uses: actions/checkout@v1
-    - name: Build the Docker image
       if: failure()
+    - name: Build the Docker image
+      if: success()
       run: |
         VERSION=$(curl -sL https://api.github.com/repos/gerbera/gerbera/releases/latest | jq -r ".tag_name")
         docker build . --build-arg=VERSION=$VERSION --file Dockerfile --tag gpbenton/gerbera:$VERSION
