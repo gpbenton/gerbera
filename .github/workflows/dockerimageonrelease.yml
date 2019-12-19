@@ -2,7 +2,7 @@ name: Check for New Release
 
 on:
   schedule:
-    - cron:  '*/15 22 * * *'
+    - cron:  '*/10 22 * * *'
 
 jobs:
 
@@ -19,7 +19,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build the Docker image
       run: |
-        VERSION=$(curl -sL https://api.github.com/repos/gerbera/gerbera/releases/latest | jq -r ".tag_name"
+        VERSION=$(curl -sL https://api.github.com/repos/gerbera/gerbera/releases/latest | jq -r ".tag_name" )
         VERSION_NUM=$(echo $VERSION | sed s/v//)
         docker build . --build-arg=VERSION=$VERSION_NUM --file Dockerfile --tag gpbenton/gerbera:$VERSION
         docker login -u gpbenton -p '${{ secrets.HUB_TOKEN }}'
