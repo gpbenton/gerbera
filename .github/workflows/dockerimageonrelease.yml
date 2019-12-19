@@ -27,7 +27,3 @@ jobs:
         docker tag gpbenton/gerbera:$VERSION gpbenton/gerbera:latest
         docker push gpbenton/gerbera:latest
         docker logout
-      
-      run: |
-        
-        docker build . --file Dockerfile --tag my-image-name:$(date +%s)
