@@ -1,0 +1,4 @@
+#!/bin/bash
+VERSION=$(curl -sL https://api.github.com/repos/gerbera/gerbera/releases/latest | awk '/"tag_name": "v(.*)",/ {split($2, xout, /"/); print xout[2]}')
+docker tag $IMAGE_NAME $DOCKER_REPO:$VERSION
+docker push $DOCKER_REPO:$VERSION
