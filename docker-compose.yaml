@@ -6,9 +6,8 @@ services:
         build: .
         restart: always
         volumes:
-            - "~/Pictures:/media/pictures:ro"
-            - "~/Videos:/media/videos:ro"
-            - "~/Music:/media/music:ro"
+            - "/media/pi/pny/mega/Pictures:/media/pictures:ro"
+            - "/media/pi/pny/mega/Music:/media/music:ro"
             - "./config:/home/gerbera/.config/gerbera"
         network_mode: "host"
         restart: always
