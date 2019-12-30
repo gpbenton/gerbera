@@ -17,13 +17,6 @@ jobs:
         wget -q https://registry.hub.docker.com/v1/repositories/gpbenton/gerbera/tags -O - | grep --invert-match --silent $VERSION
 
     - uses: actions/checkout@v1
-    - name: Build the Docker image
+    - name: Call a POST url to start the build on the docker hub
       run: |
-        VERSION=$(curl -sL https://api.github.com/repos/gerbera/gerbera/releases/latest | jq -r ".tag_name" )
-        VERSION_NUM=$(echo $VERSION | sed s/v//)
-        docker build . --build-arg=VERSION=$VERSION_NUM --file Dockerfile --tag gpbenton/gerbera:$VERSION
-        docker login -u gpbenton -p '${{ secrets.HUB_TOKEN }}'
-        docker push gpbenton/gerbera:$VERSION
-        docker tag gpbenton/gerbera:$VERSION gpbenton/gerbera:latest
-        docker push gpbenton/gerbera:latest
-        docker logout
+        wget --post-data "" https://hub.docker.com/api/build/v1/source/af6fa0c8-3949-4a4e-86c2-be8dbb9da5bc/trigger/8cc327c9-538e-48fc-8dd4-47c3961da199/call/
