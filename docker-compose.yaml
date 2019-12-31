@@ -1,9 +1,13 @@
 
-version: '2.0'
+version: '2.4'
 
 services:
     app:
-        build: .
+        build: 
+          context: .
+          args:
+              VERSION: 1.4.0
+
         restart: always
         volumes:
             - "/media/pi/pny/mega/Pictures:/media/pictures:ro"

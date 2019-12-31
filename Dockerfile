@@ -13,20 +13,25 @@ WORKDIR /tmp
 
 RUN wget https://github.com/gerbera/gerbera/archive/v${VERSION}.tar.gz && tar -xzvf v${VERSION}.tar.gz
 
-RUN echo Here
+RUN apt-get install -y pkg-config
 RUN CFLAGS='-D_LARGE_FILE_SOURCE -D_FILE_OFFSET_BITS=64' sh gerbera-${VERSION}/scripts/install-pupnp18.sh
 RUN sh gerbera-${VERSION}/scripts/install-taglib111.sh
-RUN sh gerbera-${VERSION}/scripts/install-duktape.sh
+RUN apt-get install -y duktape-dev libmatroska-dev
+#RUN sh gerbera-${VERSION}/scripts/install-duktape.sh
 
-RUN mkdir build && cd build && cmake ../gerbera-${VERSION} -DWITH_MAGIC=1 -DWITH_CURL=1 -DWITH_JS=1 \
--DWITH_TAGLIB=1 -DWITH_AVCODEC=1 -DWITH_FFMPEGTHUMBNAILER=1 -DWITH_EXIF=1 -DWITH_SYSTEMD=0 && make -j4 && make install
+RUN mkdir build && cd build && cmake ../gerbera-${VERSION} -DWITH_MAGIC=1 \
+-DWITH_CURL=1 -DWITH_JS=1 -DWITH_TAGLIB=1 -DWITH_AVCODEC=1 \
+-DWITH_FFMPEGTHUMBNAILER=1 -DWITH_EXIF=1 -DWITH_SYSTEMD=0 && \
+make -j1 && make install
 
 
 
 
 FROM ubuntu:18.04
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y libixml10 libexpat1 libsqlite3-0 libcurl4 libmagic1 libavformat57 libffmpegthumbnailer4v5
+RUN apt-get update && apt-get upgrade -y && apt-get install -y libixml10 \
+    libexpat1 libsqlite3-0 libcurl4 libmagic1 libavformat57 \
+    libffmpegthumbnailer4v5 libmatroska6v5 libexif12 duktape libduktape202
 
 RUN apt-get install -y libexif12
 
@@ -36,9 +41,9 @@ ENV VERSION ${VERSION:-1.3.5}
 copy --from=builder /usr/local/bin/gerbera /usr/local/bin/gerbera
 copy --from=builder /usr/local/share/gerbera /usr/local/share/gerbera
 
-copy --from=builder /usr/local/lib/libduktape* /usr/local/lib/
-copy --from=builder /usr/local/include/duktape.h /usr/local/include/
-copy --from=builder /usr/local/include/duk_config.h /usr/local/include/
+#  copy --from=builder /usr/local/lib/libduktape* /usr/local/lib/
+#  copy --from=builder /usr/local/include/duktape.h /usr/local/include/
+#  copy --from=builder /usr/local/include/duk_config.h /usr/local/include/
 
 copy --from=builder /usr/local/bin/taglib-config /usr/local/bin/
 copy --from=builder /usr/local/lib/pkgconfig/taglib.pc /usr/local/lib/pkgconfig/taglib.pc
