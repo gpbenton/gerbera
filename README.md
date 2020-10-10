@@ -1,3 +1,5 @@
+This project is archived as the official docker image is now smaller than this image
+
 # gerbera
 Docker installation of [gerbera](https://github.com/gerbera/gerbera), a upnp media server
 
